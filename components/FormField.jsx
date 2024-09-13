@@ -14,12 +14,12 @@ const FormField = ({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View className={`space-y-2 ${otherStyles}`}>
-      <Text className="text-base text-[#838383] font-pmedium">{title}</Text>
+    <View className={`${otherStyles}`}>
+      <Text className="text-[19px] text-[#838383] font-pbold mb-1">{title}</Text>
 
-      <View className="w-full h-16 px-4 bg-[#111] rounded-2xl border-2 border-[#222] focus:border-primary flex flex-row items-center">
+      <View className="w-full h-[56px] px-4 bg-[#111] rounded-2xl border-2 border-[#222] focus:border-primary flex flex-row items-center">
         <TextInput
-          className="flex-1 text-[#333] font-psemibold text-base"
+          className="flex-1 text-[#fff] font-psemibold text-base"
           value={value}
           placeholder={placeholder}
           placeholderTextColor="#7B7B8B"

@@ -28,7 +28,6 @@ const Train = () => {
         { title: 'Баскетбол', key: '5' }
       ];
 
-      // Преобразование списка в объект
       let updated = sports.map(key => {
         let sport = types.find(sport => sport.key === key);
         return sport || { title: 'Неизвестный', key: key };

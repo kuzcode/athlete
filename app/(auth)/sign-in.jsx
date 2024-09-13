@@ -54,11 +54,11 @@ const SignIn = () => {
           />
 
           <Text className="text-2xl font-semibold mt-10 text-white font-psemibold">
-            Войдите в аккаунт
+            войдите в аккаунт
           </Text>
 
           <FormField
-            title="Почта"
+            title="почта"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
@@ -66,14 +66,14 @@ const SignIn = () => {
           />
 
           <FormField
-            title="Пароль"
+            title="пароль"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
           />
 
           <CustomButton
-            title="Войти"
+            title="войти"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -81,13 +81,13 @@ const SignIn = () => {
 
           <View className="flex justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-gray-500 font-pregular">
-              Вы впервые?
+              вы впервые?
             </Text>
             <Link
               href="/sign-up"
               className="text-lg font-psemibold text-primary"
             >
-              Регистрация
+              регистрация
             </Link>
           </View>
         </View>

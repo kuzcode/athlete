@@ -34,18 +34,19 @@ const Welcome = () => {
             resizeMode="contain"
           />
 
-          <View className="relative mt-5">
-            <Text className="text-3xl font-bold text-center text-[#fff]">
-              <Text className="text-primary">Клуб</Text> - ваш спорт в Беларуси
+          <View className="relative mt-5 w-[100vw] px-4">
+            <Text className="text-3xl font-pbold text-left text-[#fff]">
+              <Text className="text-primary">атлет</Text> - ваш спорт в Беларуси
             </Text>
+
+          <Text className="text-[18px] font-pregular text-[#838383] mt-4 text-left">
+            совместные тренировкии, новые знакомства, советы по питанию!
+          </Text>
           </View>
 
-          <Text className="text-[16px] font-pregular text-[#838383] mt-7 text-center">
-            Совместные тренировкии, новые знакомства, советы по питанию - всё про спорт!
-          </Text>
 
           <CustomButton
-            title="Начать путь"
+            title="начать путь"
             handlePress={() => router.push("/sign-up")}
             containerStyles="w-full mt-7"
           />

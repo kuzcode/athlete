@@ -295,3 +295,97 @@ And if you're hungry for more than just a course and want to understand how we l
 </a>
 
 #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{current == 0 ? (
+          user.posts.length == 0 ? (
+          <Text>Записей пока нет</Text>
+          ) : (
+            user.posts.map(post =>
+              <View className="my-1 py-1 bg-white rounded-xl">
+                {post.imageUrl && (
+                  <Image
+                  source={{ uri: post?.imageUrl }}
+                  className="w-full h-[75vw] rounded-xl"
+                  resizeMode="cover"
+                />
+                )}
+                <Text className="text-lg mx-4">{post.caption}</Text>
+                <View>
+                  <Text>{post?.likes}</Text>
+                </View>
+              </View>
+            )
+          )
+        ) : (
+          <Text>hui</Text>
+        )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          const topTitles = [
+    '',
+    'топ пробежавших в РБ'
+  ]
+
+  const records = [
+    {list: [{name: 'Александр Василевич', done: 907, avatar: 'https://africanarguments.org/wp-content/uploads/2017/07/Photos_-_Arlit-000.jpg'}], type: 1}
+  ]
+
+
+
+
+<Text className="text-xl font-pbold relative text-[#fff] mt-[0px] text-center mb-[16px]">рекорды Беларуси</Text>
+            <ScrollView horizontal={true} 
+        snapToInterval={(width * 0.9225)} // Устанавливаем величину для "щелчка" на следующий элемент
+        decelerationRate="fast" // Быстрая инерция прокрутки
+        showsHorizontalScrollIndicator={false} // Отключаем горизонтальную полосу прокрутки
+            className="relative w-[100vw] h-[220px] rounded-2xl pl-4 mb-[40px]">
+              {records.map(record => {
+                return(
+                  <View className="bg-[#111] w-[90vw] rounded-2xl py-2 px-4 mr-3">
+                  <Text className="text-white font-pbold text-[18px] text-center mb-1">{topTitles[record.type]}</Text>
+                    {record.list.map(fromList => {
+                  return(
+                    <View className="flex flex-row items-center">
+                      <Image
+                      className="w-[40px] h-[40px] rounded-full bg-[#222] mr-2"
+                      source={{uri: fromList.avatar}}
+                      />
+                  <Text className="text-white font-pregular text-[#838383] text-[17px]">{fromList.name} - {fromList.done}</Text>
+                  </View>
+                )})}
+                  </View>
+                )
+              })}
+            </ScrollView>

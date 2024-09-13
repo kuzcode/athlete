@@ -10,12 +10,14 @@ import rightArrow from "../assets/icons/right-arrow.png";
 import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
+import neww from "../assets/icons/new.png";
 import play from "../assets/icons/play.png";
 
 export default {
   play,
   bookmark,
   home,
+  neww,
   plus,
   profile,
   leftArrow,
