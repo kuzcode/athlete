@@ -30,7 +30,7 @@ const AuthLayout = () => {
           }}
         />
       <Stack.Screen
-          name="profileSettings"
+          name="profilesettings"
           options={{
             headerShown: false,
           }}

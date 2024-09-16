@@ -4,8 +4,6 @@ import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "rea
 
 import { icons } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
-import { VictoryPie } from 'victory-native';
-import { PieChart } from 'react-native-chart-kit';
 
 import { getUserPosts, signOut, getUserMap } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
@@ -17,7 +15,7 @@ import { useRoute } from '@react-navigation/native';
 const otherProfile = () => {
     const route = useRoute();
   const { user } = route.params;
-  const { data: map } = useAppwrite(() => getUserMap(user.$id));
+  const { data: map } = useAppwrite(() => getUserMap(user?.$id));
   const [markers, setMarkers] = useState([]);
 
   useEffect(() => {

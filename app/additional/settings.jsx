@@ -15,28 +15,32 @@ const Settings = () => {
 
   const links = [
     {
-      title: 'Профиль',
-      link: 'profileSettings'
+      title: 'профиль',
+      des: 'публичность · аватар',
+      link: 'additional/profilesettings'
     },
     {
-      title: 'Интересы',
+      title: 'интересы',
+      des: '',
       link: 'profile'
     },
 
     {
-      title: 'Приложение',
+      title: 'приложение',
+      des: 'дизайн · общие настроки',
       link: 'profile'
     }
   ]
   return (
     <SafeAreaView className="px-4 my-6 bg-[#000] h-full">
-      <Text className="text-2xl text-white font-psemibold">Настройки</Text>
+      <Text className="text-2xl text-white font-psemibold">настройки</Text>
 
     {links.map(link => 
       <TouchableOpacity className="bg-[#111] pt-2 pb-3 px-4 rounded-2xl mt-2"
-      onPress={() => {router.push(link.link)}}
+      onPress={() => {router.push(`/${link.link}`)}}
       >
-        <Text className="text-[#fff] font-pregular text-[18px]">{link.title}</Text>
+        <Text className="text-[#fff] font-pregular text-[19px]">{link.title}</Text>
+        <Text className="text-[#838383] font-pregular text-[15px]">{link.des}</Text>
       </TouchableOpacity>
     )}
 

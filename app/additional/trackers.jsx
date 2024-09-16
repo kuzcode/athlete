@@ -10,14 +10,13 @@ import { images } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
 import { getAllPosts, getUserTrackers, getAllUsers, getUserTrainings } from "../../lib/appwrite";
 import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
-import { LinearGradient } from 'expo-linear-gradient';
 import { types, colors } from "../../constants/types";
 import { useNavigation } from '@react-navigation/native';
 
 const Trackers = () => {
   const { width } = Dimensions.get("window");
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: trackers } = useAppwrite(() => getUserTrackers(user.$id));
+  const { data: trackers } = useAppwrite(() => getUserTrackers(user?.$id));
   const navigation = useNavigation();
 
     return (
@@ -38,7 +37,8 @@ const Trackers = () => {
               ]
               return(
                 <TouchableOpacity onPress={() => navigation.navigate('track', { track })}>
-                <LinearGradient colors={colors[track.color]} className="relative w-[90vw] mx-auto h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
+                {//<LinearGradient colors={colors[track.color]} className="relative w-[90vw] mx-auto h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4"> 
+            }
                   <Text className="text-white font-pbold text-[20px]">{contentList[track.type].a}</Text>
                   <Text className="text-[#ffffff83] font-pregular text-[20px]">{contentList[track.type].b}</Text>
 
@@ -52,7 +52,8 @@ const Trackers = () => {
                     </TouchableOpacity>
                   </View>
                   )}
-                </LinearGradient>
+                {//</LinearGradient>
+            }
                 </TouchableOpacity>
             )})}
         </View>

@@ -2,7 +2,6 @@ import { useState } from "react";
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View, Dimensions, Image  } from "react-native";
 import { useRoute } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { CustomButton, FormField, Selecter } from "../../components";
 import { Link, router } from "expo-router";
 import { createTracker } from "../../lib/appwrite";
@@ -16,13 +15,15 @@ const newTrack = () => {
     type: 0,
     goal: 0,
     color: 0,
-    userId: user.$id
+    userId: user?.$id
   })
 return(
   <ScrollView className="bg-[#000] h-full w-full">
-    <LinearGradient colors={colors[form.color]} className="w-[90vw] h-[200px] mb-4 mx-auto mt-10 rounded-2xl">
+    {//<LinearGradient colors={colors[form.color]} className="w-[90vw] h-[200px] mb-4 mx-auto mt-10 rounded-2xl">
+}
       <Text className="text-white font-pbold text-[20px] mx-4 mt-3">{form.name}</Text>
-    </LinearGradient>
+    {//</LinearGradient>
+}
 
     <FormField
               title="название"
@@ -43,11 +44,12 @@ return(
     <View className="flex flex-row flex-wrap justify-around mx-4">
     {colors.map((color, index) => 
   <TouchableOpacity key={index} className="mb-4" onPress={() => {setForm({...form, color: index})}}>
-    <LinearGradient 
-      className={`w-[18.5vw] h-[18.5vw] rounded-2xl ${form.color === index ? 'border-2 border-white' : ''}`} 
-      colors={color}
-    >
-    </LinearGradient>
+    {//<LinearGradient 
+      //className={`w-[18.5vw] h-[18.5vw] rounded-2xl ${form.color === index ? 'border-2 border-white' : ''}`} 
+      //colors={color}
+    //>
+    //</LinearGradient>
+}
   </TouchableOpacity>
 )}
     </View>

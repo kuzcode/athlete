@@ -6,6 +6,7 @@ import { icons } from "../constants";
 const FormField = ({
   title,
   value,
+  max,
   placeholder,
   handleChangeText,
   otherStyles,
@@ -27,6 +28,8 @@ const FormField = ({
           secureTextEntry={title === "Password" && !showPassword}
           {...props}
         />
+
+        <Text className="text-[15px] absolute top-[16px] right-[16px] text-right text-[#838383] font-pregular mb-1">{value?.length}/{max}</Text>
 
         {title === "Password" && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>

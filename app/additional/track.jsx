@@ -2,7 +2,6 @@ import { useState } from "react";
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View, Dimensions, Image  } from "react-native";
 import { useRoute } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { CustomButton, FormField, Selecter } from "../../components";
 import { Link, router } from "expo-router";
 import { updateTracker } from "../../lib/appwrite";
@@ -30,7 +29,8 @@ const DetailScreen = () => {
 
   return (
     <View className="bg-[#000] w-full h-full">
-            <LinearGradient colors={colors[track.color]} className="shadow-xl mt-4 mx-auto relative w-[90vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
+            {//<LinearGradient colors={colors[track.color]} className="shadow-xl mt-4 mx-auto relative w-[90vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
+}
                   <Text className="text-white font-pbold text-[20px]">{contentList[track.type].a}</Text>
                   <Text className="text-[#ffffff83] font-pregular text-[20px]">{contentList[track.type].b}</Text>
 
@@ -44,7 +44,9 @@ const DetailScreen = () => {
                     </TouchableOpacity>
                   </View>
                   )}
-                </LinearGradient>
+                  {
+                //</LinearGradient>
+                  }
 
 
                 <FormField

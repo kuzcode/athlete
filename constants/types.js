@@ -1,10 +1,37 @@
+export const toTrack = [
+    {
+        name: 'время', //0
+    },
+    {
+        name: 'расстояние' //1
+    },
+    {
+        name: 'темп' //2
+    },
+    {
+        name: 'скорость' //3
+    },
+    {
+        name: 'калории' //3
+    },
+    {
+        name: 'подъём' //4
+    },
+    {
+        name: 'расстояние' //5
+    },
+    {
+        name: 'темп' //6
+    },
+]
+
 export const types = [
-    { title: 'бег', key: '0', a: 'пробежку', color: '#FE5F55' },
+    { title: 'бег', key: '0', a: 'пробежку', color: '#FE5F55', track: [0, 1, 2, 3] },
     { title: 'спортзал', key: '1', a: 'тренировку' },
     { title: 'турники', key: '2', a: 'тренировку', color: '#ACE1AF' },
     { title: 'футбол', key: '3' },
-    { title: 'хоккей', key: '4' },
-    { title: 'плавание', key: '5', a: 'заплыв', color: '#8DC6FF' },
+    { title: 'хоккей', key: '4', track: [0] },
+    { title: 'плавание', key: '5', a: 'заплыв', color: '#8DC6FF', track: [0, 1] },
     { title: 'баскетбол', key: '6' },
     { title: 'бокс', key: '7', a: 'тренировку', color: '#660000' },
     { title: 'борьба', key: '8' },

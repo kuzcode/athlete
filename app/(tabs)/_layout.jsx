@@ -54,7 +54,7 @@ const TabLayout = () => {
               <TabIcon
                 icon={icons.home}
                 color={color}
-                name="Главная"
+                name="главная"
                 focused={focused}
               />
             ),
@@ -69,7 +69,7 @@ const TabLayout = () => {
               <TabIcon
                 icon={icons.neww}
                 color={color}
-                name="Новое"
+                name="новое"
                 focused={focused}
               />
             ),
@@ -84,7 +84,7 @@ const TabLayout = () => {
               <TabIcon
                 icon={icons.bookmark}
                 color={color}
-                name="Трекер"
+                name="трекер"
                 focused={focused}
               />
             ),
@@ -100,7 +100,7 @@ const TabLayout = () => {
               <TabIcon
                 icon={icons.plus}
                 color={color}
-                name="Пост"
+                name="пост"
                 focused={focused}
               />
             ),
@@ -115,7 +115,7 @@ const TabLayout = () => {
               <TabIcon
                 icon={icons.profile}
                 color={color}
-                name="Профиль"
+                name="профиль"
                 focused={focused}
               />
             ),

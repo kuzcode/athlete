@@ -10,7 +10,7 @@ import { icons } from "../../constants";
 const Profile = () => {
   const router = useRouter();
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: map } = useAppwrite(() => getUserMap(user.$id));
+  const { data: map } = useAppwrite(() => getUserMap(user?.$id));
   const [markers, setMarkers] = useState([]);
   
   useEffect(() => {
@@ -58,7 +58,7 @@ const Profile = () => {
     <ScrollView className="bg-[#000] h-full">
       <View className="w-full flex justify-center items-center mt-6 mb-12 px-4">
         <TouchableOpacity onPress={settings} className="flex w-full items-end mb-10">
-          <Image source={icons.logout} resizeMode="contain" className="w-6 h-6 mt-[20px]" />
+          <Image source={icons.settings} tintColor={'#838383'} resizeMode="contain" className="w-6 h-6 mt-[20px]" />
         </TouchableOpacity>
 
         <View className="w-[140px] h-[140px] rounded-full mb-4 flex justify-center items-center">
@@ -69,15 +69,13 @@ const Profile = () => {
           />
         </View>
 
-        <Text className="text-[21px] font-pbold text-white">{user?.name}</Text>
+        <Text className="text-[24px] font-pbold text-white">{user?.name}</Text>
         <Text className="text-lg font-psemibold text-[#838383]">@{user?.username}</Text>
       </View>
 
-      <View className="bg-[#3c87ff] mx-auto w-[91.545vw] h-[53vw] py-3 rounded-[16px]">
-        <View className="my-auto pb-3">
-        <Text className="text-white font-pbold mx-4 text-[32px] text-center mb-0">атлет</Text>
-        <Text className="text-white font-pregular mx-4 text-[#ffffff83] mt-[-6px] text-[17px] text-center">стиль твоей жизни.</Text>
-        </View>
+      <View className="bg-[#3c87ff] mx-auto w-[91.545vw] h-[53vw] py-3 rounded-[16px] overflow-hidden">
+        <Text className="text-white font-pregular mx-4 text-[#ffffff83] mt-[-6px] text-[24px] mt-1 leading-[24px]">клубная{`\n`}карта участника</Text>
+        <Text className="text-white font-pbold text-[27vw] text-center absolute bottom-[-40px] left-[-20px] right-[-20px] text-nowrap">athlete</Text>
         <View className="mx-4 mt-2 absolute w-[83.545vw] bottom-4">
           {//<View style={styles.outerBlock}>
             //<View style={[styles.innerBlock, { width: blockWidth }]} />

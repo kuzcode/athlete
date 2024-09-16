@@ -7,6 +7,8 @@ import useAppwrite from "../../lib/useAppwrite";
 import { getTrainingsForYou, getCurrentUser } from "../../lib/appwrite";
 import { Svg } from "react-native-svg";
 
+import { types } from "../../constants/types";
+
 const Train = () => {
   const { data: trainings } = useAppwrite(() => getTrainingsForYou(['0', '1']));
 
@@ -17,16 +19,6 @@ const Train = () => {
   useEffect(() => {
     if (user) { // Проверяем, пришли ли данные пользователя
       let sports = user.sports || []; // Если sports не определен, используем пустой массив
-
-      const types = [
-        { title: 'Все', key: 'all' },
-        { title: 'Бег', key: '0' },
-        { title: 'Качалка', key: '1' },
-        { title: 'Велосипед', key: '2' },
-        { title: 'Плавание', key: '3' },
-        { title: 'Теннис', key: '4' },
-        { title: 'Баскетбол', key: '5' }
-      ];
 
       let updated = sports.map(key => {
         let sport = types.find(sport => sport.key === key);
@@ -51,10 +43,11 @@ const Train = () => {
 
   const [current, setCurrent] = useState(
     {
-      title: 'Все',
+      title: 'все',
       key: 'all'
     }
-    )  
+    )
+      
 
     const { height } = Dimensions.get('window');
     
@@ -81,10 +74,12 @@ const Train = () => {
   const filteredTrainings = current.key === 'all' 
   ? trainings
   : trainings.filter(train => train.kind === current.key)
+  
+  types.push({ title: 'все', key: 'all'})
 
   return (
     <SafeAreaView className="bg-[#000] h-full">
-      <Text className="font-pbold text-[#fff] text-[27px] mx-4 mt-3 mb-3">Тренировки</Text>
+      <Text className="font-pbold text-[#fff] text-[27px] mx-4 mt-3 mb-3">новое</Text>
     <View>
     <ScrollView horizontal={true} className="flex px-3">
         {updatedSports.map(type =>
@@ -106,19 +101,19 @@ const Train = () => {
     </ScrollView>
     </View>
 
-    <TouchableOpacity className="bg-[#111] mx-4 mt-4 h-[120px] rounded-3xl flex justify-center"
+    <TouchableOpacity className="bg-[#111] mx-4 mt-4 h-[120px] rounded-2xl flex justify-center"
     activeOpacity={0.85}
     onPress={showNotification}
     >
-        <Text className="font-psemibold text-lg text-[#838383] text-center">Создать свою +</Text>
+        <Text className="font-pregular text-lg text-[#838383] text-center">cоздать свою +</Text>
     </TouchableOpacity>
 
 
-    <Text className="font-pbold text-[27px] mx-4 mt-2 mb-3">Примите участие</Text>
+    <Text className="font-pbold text-[27px] mx-4 mt-2 mb-3 text-white">примите участие</Text>
     
 
   {filteredTrainings.length == 0 ? (
-    <Text className="text-center text-[#838383] text-lg mx-4 mt-4">Тренировок пока нет :(</Text>
+    <Text className="text-center text-[#838383] text-lg mx-4 mt-4 font-pregular">тренировок пока нет :(</Text>
   ) : (
 
   filteredTrainings.map(train => {

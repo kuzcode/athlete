@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Athlete",
-    "slug": "sora",
+    "slug": "athlete",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -38,7 +38,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "648d23ed-d8b0-494b-8df0-4420d8d8fdff"
+        "projectId": "dc346ca7-4762-445a-8d07-9693d277c1b5"
       }
     },
     "runtimeVersion": {
@@ -46,6 +46,7 @@
     },
     "updates": {
       "url": "https://u.expo.dev/648d23ed-d8b0-494b-8df0-4420d8d8fdff"
-    }
+    },
+    "owner": "kuzmin"
   }
 }
