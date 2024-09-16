@@ -9,7 +9,6 @@ import { useGlobalContext } from "../context/GlobalProvider";
 
 const Welcome = () => {
   const { loading, isLogged } = useGlobalContext();
-
   if (!loading && isLogged) return <Redirect href="/home" />;
 
   return (
