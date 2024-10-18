@@ -6,12 +6,13 @@ import { ResizeMode, Video } from "expo-av";
 import background from "../../assets/video.mp4"
 
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { images } from "../../constants";
+import { icons } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
 import { getAllPosts, getUserTrackers, getAllUsers, getUserTrainings } from "../../lib/appwrite";
 import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
 import { types, colors } from "../../constants/types";
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from "expo-linear-gradient";
 
 const Home = () => {
   const { width } = Dimensions.get("window");
@@ -35,13 +36,16 @@ const Home = () => {
             />
 
       <Text className="mt-1 mx-3 mb-10 font-psemibold text-[16px] text-[#ffffff90] text-center absolute top-4 hidden">физкультпривет, {user?.name}</Text>
-      <TouchableOpacity className="bg-[#fff] relative m-2 top-[45vw] w-[83%] pt-[15px] pb-[19px] rounded-[17px] z-30">
-                <Text className="text-center font-pregular text-[18px]">начать тренировку ▶</Text>
+      <TouchableOpacity onPress={() => {router.push('/bookmark')}} className="bg-[#fff] relative m-2 top-[45vw] w-[83%] pt-[15px] pb-[19px] rounded-[17px] z-30">
+                <View className="flex flex-row items-center justify-center">
+                <Text className="text-center font-pregular text-[18px]">начать тренировку</Text>
+                <Image source={icons.play} tintColor={'#333'} className="w-[12px] h-[12px] ml-2 mb-[-4px]" />
+                </View>
               </TouchableOpacity>
 
 
-            {//<LinearGradient className="h-[18vw] relative top-[17vw] w-full z-10" colors={['#fff0', '#000']}></LinearGradient>
-}
+            <LinearGradient className="h-[18vw] relative top-[17vw] w-full z-10" colors={['#fff0', '#000']}></LinearGradient>
+
             </View>
             <View>
             <Text className="text-[16px] leading-[17px] mx-[16px] font-pregular relative text-[#838383] mt-[40px] text-center mb-4">здравствуй, чемпион! время идти на тренировку, всё, что не убивает, делает нас сильнее</Text>
@@ -106,9 +110,9 @@ const Home = () => {
                 }
               ]
               return(
-                <TouchableOpacity className="relative w-[90vw] mr-[3vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden" onPress={() => navigation.navigate('track', { track })}>
-                {//<LinearGradient colors={colors[track.color]} className="relative w-[90vw] mr-[3vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
-            }
+                <TouchableOpacity className="" onPress={() => navigation.navigate('track', { track })}>
+                <LinearGradient colors={colors[track.color]} className="relative w-[90vw] mr-[3vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
+            
                   <Text className="text-white font-pbold text-[20px]">{contentList[track.type].a}</Text>
                   <Text className="text-[#ffffff83] font-pregular text-[20px]">{contentList[track.type].b}</Text>
 
@@ -122,13 +126,13 @@ const Home = () => {
                     </TouchableOpacity>
                   </View>
                   )}
-                {
-                //</LinearGradient>
-                }
+                
+                </LinearGradient>
+                
                 </TouchableOpacity>
             )})}
 
-            <TouchableOpacity onPress={() => {router.push('/additional/newTrack')}}>
+            <TouchableOpacity className="pr-4" onPress={() => {router.push('/additional/newTrack')}}>
                 <View className="relative w-[90vw] mr-[3vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
                 <Text className="text-[#fff] text-center font-pbold m-0 bg-[#333] rounded-full mx-auto w-[64px] mt-[24px] h-[64px] text-[40px]">+</Text>
                 <Text className="text-[#838383] text-center font-pregular text-[15px] mt-[8px]">создать трекер привычки</Text>
@@ -145,7 +149,7 @@ const Home = () => {
             className="relative w-[100vw] h-[135px] rounded-2xl pl-4 mb-[40px]">
               
             {users.map(user => {
-              var newList = user.sports.map(str => {
+              var newList = user?.sports.map(str => {
                 const matchedObject = types.find(type => type.key == str);
                 // Если объект найден, возвращаем его текст, иначе возвращаем null или другое значение
                 return matchedObject ? matchedObject.title : null; 

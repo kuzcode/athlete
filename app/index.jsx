@@ -22,12 +22,6 @@ const Welcome = () => {
       >
         <View className="w-full flex justify-center items-center h-full px-4">
           <Image
-            source={images.logo}
-            className="w-[130px] h-[84px]"
-            resizeMode="contain"
-          />
-
-          <Image
             source={images.cards}
             className="max-w-[380px] w-full h-[298px]"
             resizeMode="contain"
@@ -35,7 +29,7 @@ const Welcome = () => {
 
           <View className="relative mt-5 w-[100vw] px-4">
             <Text className="text-3xl font-pbold text-left text-[#fff]">
-              <Text className="text-primary">атлет</Text> - ваш спорт в Беларуси
+              <Text className="text-[#3c87ff]">атлет</Text> - ваш спорт в Беларуси
             </Text>
 
           <Text className="text-[18px] font-pregular text-[#838383] mt-4 text-left">

@@ -17,7 +17,7 @@ const profileSettings = () => {
         name: user.name,
         bio: user.bio,
         username: user.username,
-        id: user.$id,
+        id: user?.$id,
     })
 
 

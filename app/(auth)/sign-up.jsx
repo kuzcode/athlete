@@ -149,6 +149,9 @@ const SignUp = () => {
             value={form.bio}
             handleChangeText={(e) => setForm({ ...form, bio: e })}
             otherStyles="mt-7"
+            multiline={true}
+            max={1024}
+            numberOfStrokes={10}
           />
 
           <Selecter
@@ -210,7 +213,7 @@ const SignUp = () => {
             </Text>
             <Link
               href="/sign-in"
-              className="text-lg font-psemibold text-primary"
+              className="text-lg font-psemibold text-[#3c87ff]"
             >
               войдите
             </Link>

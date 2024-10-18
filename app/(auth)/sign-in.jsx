@@ -47,13 +47,8 @@ const SignIn = () => {
             minHeight: Dimensions.get("window").height - 100,
           }}
         >
-          <Image
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[115px] h-[34px]"
-          />
 
-          <Text className="text-2xl font-semibold mt-10 text-white font-psemibold">
+          <Text className="text-2xl font-semibold mt-[0px] text-white font-psemibold">
             войдите в аккаунт
           </Text>
 
@@ -62,11 +57,13 @@ const SignIn = () => {
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
+            max={100}
             keyboardType="email-address"
           />
 
           <FormField
             title="пароль"
+            max={100}
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
@@ -85,7 +82,7 @@ const SignIn = () => {
             </Text>
             <Link
               href="/sign-up"
-              className="text-lg font-psemibold text-primary"
+              className="text-lg font-psemibold text-[#3c87ff]"
             >
               регистрация
             </Link>

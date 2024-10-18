@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "rea
 import { useRouter } from "expo-router";
 import { useState, useEffect } from "react";
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserMap, signOut } from "../../lib/appwrite";
+import { getUserCompleted, signOut } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { types } from "../../constants/types";
 import { icons } from "../../constants";
@@ -10,15 +10,22 @@ import { icons } from "../../constants";
 const Profile = () => {
   const router = useRouter();
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: map } = useAppwrite(() => getUserMap(user?.$id));
-  const [markers, setMarkers] = useState([]);
+  const { data: completed } = useAppwrite(() => getUserCompleted(user?.$id));
+  const [trainings, setTrainings] = useState([]);
   
   useEffect(() => {
-    if (map[0]) {
-      setMarkers(map[0].markers);
-      console.log('Markers:', map[0].markers);
+    if (completed[0]) {
+      setTrainings(completed)
     }
-  }, [map]);
+  }, [completed]);
+
+
+  const formatTime = time => {
+    const hours = String(Math.floor(time / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, '0');
+    const seconds = String(time % 60).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  };
 
   const logout = async () => {
     await signOut();
@@ -96,32 +103,29 @@ const Profile = () => {
       </View>
     ))}
   </View>
-  {user.bio !== '' && user.bio !== null && (
-    <Text className="text-[#838383] mx-4 text-[16px] font-pregular">Био: {user.bio}</Text>
+  {user?.bio !== '' && user?.bio !== null && (
+    <Text className="text-[#838383] mx-4 text-[16px] font-pregular">Био: {user?.bio}</Text>
   )}
 </View>
 <TouchableOpacity className="bg-[#111] mx-3 rounded-2xl pt-2 pb-4 my-4 px-4" onPress={() => {router.push("/map")}}>
-  <Text className="text-white font-pbold text-[19px]">Счётчик</Text>
-  {markers.length == 0 ? (
+  <Text className="text-white font-pbold text-[19px]">тренировки</Text>
+  {trainings.length === 0 ? (
     <View>
         <Text className="text-[#fff] text-center font-pbold m-0 bg-[#333] rounded-full mx-auto w-[64px] mt-[24px] h-[64px] text-[40px]">+</Text>
-        <Text className="text-[#838383] text-center font-pregular text-[15px] mt-[8px]">создать карту</Text>
+        <Text className="text-[#838383] text-center font-pregular text-[15px] mt-[8px]">начать первую</Text>
     </View>
   ) : (
   <View>
-    {markers.map(marker => {
-      const x = Math.max(...markers.map(marker => marker.time));
-      const w = (marker.time / x) * 100;
-      let sport = types.find(sport => sport.key == marker.type);
-      return (
-        <View key={marker.id} className="flex justify-end">
-          <Text className="text-white font-pregular text-[#838383] text-[18px] mt-2 mb-1">{sport?.title}: {marker.time} мин</Text>
-          <View style={styles.outer}>
-            <View style={[styles.inner, { width: `${w}%`, backgroundColor: sport?.color }]} />
-          </View>
-        </View>
-      );
-    })}
+    {trainings.map(tr => {
+      return(
+      <View className="bg-[#222] px-3 mt-3 rounded-lg pt-1 pb-2">
+        <Text className="font-pregular text-[#838383] text-[20px]">{types[tr.typ].title}</Text>
+        {tr.distance !== 0 && (
+          <Text className="font-psemibold text-[#fff] text-[24px]">{tr.distance}км</Text>
+        )}
+        <Text className="text-[#838383] font-pregular text-[18px]">{formatTime(tr.time)}</Text>
+      </View>
+    )})}
   </View>
     )}
 </TouchableOpacity>

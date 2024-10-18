@@ -1,45 +1,80 @@
-import { View, Text, TouchableOpacity, ScrollView, Vibration } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Vibration, Alert, StyleSheet } from 'react-native';
+import MapView, { Polyline } from 'react-native-maps';
 import { useGlobalContext } from '../../context/GlobalProvider';
+import * as Location from 'expo-location';
 import { toTrack, types } from '../../constants/types';
-import { useState, useEffect } from 'react';
+import { saveCompleted } from '../../lib/appwrite';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Bookmark = () => {
   const { user } = useGlobalContext();
-  const filteredList = types.filter(item => user.sports.includes(item.key));
+  const filteredList = types.filter(item => user?.sports?.includes(item.key));
   const [current, setCurrent] = useState(filteredList[0]);
   const [isTracking, setIsTracking] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [paused, setPaused] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [distance, setDistance] = useState(0);
   const [lastPosition, setLastPosition] = useState(null);
+  const [coordinates, setCoordinates] = useState([]);
+  const [count, setCount] = useState(5);
   const [counterShown, setCounterShown] = useState(false);
-  const [count, setCount] = useState(3);
+  const [forCount, setForCount] = useState({
+    left: 0,
+    right: 0
+  });
+
+
+  const trackLabels = {
+    1: 'пройдено',
+    2: 'темп',
+    3: 'скорость',
+    4: 'сред. скорость',
+    5: 'счёт',
+    6: 'подъём'
+  };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+  
+
+  const handlePress = (item) => {
+    setCurrent(item); // Устанавливаем текущее значение
+  };
+
   
   filteredList.push({
     title: 'другое',
     a: 'тренировку'
   });
 
+
   const calculatePace = (time, distance) => {
-    if (distance === 0) return "0:00 мин/км"; // Если расстояние 0, темп недоступен
-  
-    const paceInMinutes = time / 60 / distance; // Темп в минутах на километр
+    if (distance === 0) return "--:--";
+    
+    const paceInMinutes = time / 60 / distance;
     const minutes = Math.floor(paceInMinutes);
     const seconds = Math.round((paceInMinutes - minutes) * 60);
-  
-    return `${minutes}:${String(seconds).padStart(2, '0')} мин/км`;
-  };  
+    
+    return `${minutes}:${String(seconds).padStart(2, '0')}`;
+  };
 
   useEffect(() => {
     let timer;
-    if (isTracking) {
+    if (isTracking && !paused) {
       timer = setInterval(() => {
         setTimeElapsed(prev => prev + 1);
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [isTracking]);
+  }, [isTracking, paused]);
+
 
   useEffect(() => {
     let watchSubscription;
@@ -52,13 +87,14 @@ const Bookmark = () => {
           distanceInterval: 1,
           timeInterval: 1000
         },
-        (position) => {
+        position => {
           const { latitude, longitude } = position.coords;
 
           if (lastPosition) {
             const newDistance = calculateDistance(lastPosition, { latitude, longitude });
             setDistance(prevDistance => prevDistance + newDistance);
           }
+          setCoordinates(coords => [...coords, { latitude, longitude }]);
           setLastPosition({ latitude, longitude });
         }
       );
@@ -75,11 +111,65 @@ const Bookmark = () => {
     };
   }, [isTracking, lastPosition]);
 
+  const handleStart = () => {
+    setCount(5);
+    setCounterShown(true);
+    setIsSaving(false);
+
+    const countdownInterval = setInterval(() => {
+      setCount(prevCount => {
+        if (prevCount <= 1) {
+          clearInterval(countdownInterval);
+          setCounterShown(false);
+          setIsTracking(true);
+          return 0;
+        } else {
+          Vibration.vibrate(100);
+          return prevCount - 1;
+        }
+      });
+    }, 1000);
+  };
+
+  const handlePause = () => {
+    setPaused(!paused);
+  };
+
+  const handleFinish = () => {
+    setIsSaving(true);
+    setIsTracking(false);
+    setPaused(false);
+  };
+
+  const handleConfirmFinish = () => {
+    saveCompleted(user.$id, parseInt(current.key), timeElapsed, parseFloat(distance).toFixed(2))
+    setIsTracking(false);
+    setTimeElapsed(0);
+    setForCount({
+      left: 0,
+      right: 0
+    })
+    setDistance(0);
+    setIsSaving(false);
+  };
+
+
+  const handleConfirmCancel = () => {
+    setIsTracking(false);
+    setTimeElapsed(0);
+    setForCount({
+      left: 0,
+      right: 0
+    })
+    setDistance(0);
+    setIsSaving(false);
+  };
+
+
 
   const calculateDistance = (startCoords, endCoords) => {
-    const toRad = (value) => (value * Math.PI) / 180;
+    const toRad = value => (value * Math.PI) / 180;
     const earthRadius = 6371; // Radius of Earth in km
-
     const dLat = toRad(endCoords.latitude - startCoords.latitude);
     const dLon = toRad(endCoords.longitude - startCoords.longitude);
     const a =
@@ -91,35 +181,7 @@ const Bookmark = () => {
     return earthRadius * c; // Distance in km
   };
 
-  const handleStartPause = () => {
-    setIsTracking(!isTracking);
-    if (!isTracking) {
-        setCount(4);
-        setCounterShown(true);
-
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => {
-              setCount((prevCount) => prevCount - 1); // Уменьшаем count на 1
-              Vibration.vibrate(120, true);
-          }, i * 1000); // Уменьшаем count с интервалом в 1 секунду
-      }
-      
-      
-    
-
-      setTimeout(() => {
-        setTimeElapsed(0);
-        setDistance(0);
-        setLastPosition(null);
-      setCounterShown(false);
-    }, 3000)
-    }
-    else {
-        setIsSaving(true);
-    }
-  };
-
-  const formatTime = (time) => {
+  const formatTime = time => {
     const hours = String(Math.floor(time / 3600)).padStart(2, '0');
     const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, '0');
     const seconds = String(time % 60).padStart(2, '0');
@@ -128,98 +190,162 @@ const Bookmark = () => {
 
   const pace = calculatePace(timeElapsed, distance);
 
-  const [shownTabs, setShownTabs] = useState(
-    types[current.key].track
-  )
 
-  const result = shownTabs.map(index => {
-    if (index < toTrack.length) { // Проверка на выход за пределы массива
-        return toTrack[index];
-    }
-}).filter(value => value !== undefined); // Убираем undefined из результата
+  const getTrackedData = () => {
+    var trackedData = [];
+    
+    current?.track?.forEach(trackId => {
+      if (trackLabels[trackId]) {
+        switch (trackId) {
+          case 1:
+            trackedData.push({ label: trackLabels[trackId], value: `${distance.toFixed(2)}`, meas: 'км' });
+            break;
+          case 2:
+            trackedData.push({ label: trackLabels[trackId], value: calculatePace(timeElapsed, distance), meas: 'мин/км' });
+            break;
+          case 3:
+            trackedData.push({ label: trackLabels[trackId], value: '0', meas: 'км/ч'});
+            break;
+          case 4:
+            trackedData.push({ label: trackLabels[trackId], value: '0', meas: 'км/ч'});
+            break;
+          case 5:
+            trackedData.push({ label: trackLabels[trackId], value: `${forCount.left}:${forCount.right}`});
+            break;
+          case 6:
+            trackedData.push({ label: trackLabels[trackId], value: `100м`});
+            break;  
+          default:
+            break;
+        }
+      }
+    });
 
+    return trackedData;
+  }
 
-  console.log(result);
+  const trackedData = getTrackedData();
 
   return (
-    <SafeAreaView style={{ padding: 16, backgroundColor: 'black', flex: 1 }}>
-        {isSaving && (
-            <View className="absolute z-30 bg-[#111] w-[100vw] h-[88vh] pt-4 top-6 px-4 left-0 right-0 bottom-0">
-                <Text className="text-white font-pbold text-[21px]">сохранение тренировки</Text>
-
-                <View className="mt-4">
-                <Text className="text-[#fff] font-pbold text-[21px]">{formatTime(timeElapsed)}</Text>
-                <Text className="text-[#838383] font-pbold text-[21px]">время</Text>
-                </View>
-
-                <View className="absolute bottom-4 mx-4 w-full">
-                    <TouchableOpacity onPress={() => {setIsSaving(false)}} className="py-3 rounded-xl relative w-full border-[2px] border-[#333] mb-2">
-                        <Text className="font-pregular text-white text-[16px] text-center">отмена</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity className="py-3 rounded-xl relative bg-white w-full">
-                        <Text className="font-pregular text-black text-[16px] text-center">сохранить</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )}
-
-{counterShown && (
-            <View className="absolute z-30 bg-[#111] w-[100vw] h-[88vh] pt-4 top-6 px-4 left-0 right-0 bottom-0">
-                <Text className="text-white font-pbold text-[100px] text-center mt-[32vh]">{count}</Text>
-            </View>
-        )}
-
-      <Text className="font-pbold text-white text-center text-[25px]">Трекер</Text>
-        {shownTabs.includes(0) && (
-      <Text className="font-pregular text-white text-center text-[38px]">{formatTime(timeElapsed)}</Text>
-        )}
-
-      {result.includes(1) && (
-      <Text className="font-pregular text-white text-center text-[38px]">{formatTime(timeElapsed)}</Text>
-        )}
-        
-      <Text className="font-pregular text-white text-center text-[22px]">{distance.toFixed(2)}км - {pace}</Text>
-      <View style={{ position: 'absolute', width: '100%', bottom: 32 }}>
-        <ScrollView 
-        decelerationRate="fast" // Быстрая инерция прокрутки
-        horizontal={true} className="w-[100vw] ml-4 flex">
-          {filteredList.map(kind => (
-            <TouchableOpacity
-              key={kind.key}
-              onPress={() => { setCurrent(kind); setShownTabs(types[kind.key].track) }}
-              style={{
-                backgroundColor: current.key === kind.key ? '#fff' : '#111',
-                borderRadius: 10,
-                marginRight: 3,
-                marginLeft: 3,
-                paddingVertical: 6,
-                paddingHorizontal: 16,
-                position: 'relative',
-                zIndex: 20
-              }}>
-              <Text 
-              className="font-pregular text-[17px]"
-              style={{
-                color: current.key === kind.key ? '#000' : '#838383',
-              }}>{kind.title}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-        <TouchableOpacity onPress={handleStartPause} style={{
-          backgroundColor: 'white',
-          paddingTop: 12,
-          marginTop: 8,
-          paddingBottom: 15,
-          borderRadius: 20,
-          left: 16
-        }}>
-          <Text className="text-center font-pregular text-[18px]">{isTracking ? 'остановить' : 'начать'} {current.a} {isTracking ? '⏸' : '▶'} </Text>
-        </TouchableOpacity>
+    <>
+    {counterShown && (
+      <View className="bg-[#000] w-[100vw] h-[100vh] absolute top-0 z-30">
+        <Text className="text-[80px] mt-[40vh] text-center font-psemibold text-white">{count}</Text>
+          <Text className="text-[24px] mt-[6px] text-center font-pregular text-white">light weight, baby!</Text>
       </View>
-    </SafeAreaView>
+    )}
+    <View className="bg-[#000] p-0 h-[100vh] pt-10">
+      <View contentContainerStyle={{ paddingBottom: 20 }}>
+        <View className="b-4 h-[100vh]">
+        <View>
+          <LinearGradient
+          className="w-[60px] h-10 absolute right-0 z-10"
+          start={{x: 0, y: 0}} end={{x: 0.9, y: 0}}
+          colors={['#fff0', '#000']}
+          />
+      <ScrollView className="mx-0 px-4 mb-4 flex flex-row" horizontal showsHorizontalScrollIndicator={false}>
+        {filteredList.map(item => (
+          <TouchableOpacity
+            key={item.key}
+            onPress={() => handlePress(item)}>
+            <Text 
+            className="font-psemibold mr-[12px]"
+            style={[{
+              color: '#838383',
+              fontSize: 18
+            }, current.key === item.key && {
+              color: '#fff',
+            }]}>{item.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    </View>
+          <View className="bg-primary rounded-lg mb-4 mx-4 py-1">
+          <Text className="text-[#fff] font-pbold text-[37px] text-center">{formatTime(timeElapsed)}</Text>
+          </View>
+
+
+          <View className="px-4 flex flex-row flex-wrap w-[100vw] justify-between">
+          {trackedData.map((data, index) => (
+            <View key={index} className="w-[43.75vw] bg-[#111] m-1 py-1 px-2 rounded-xl">
+              <Text className="text-[#838383] font-pregular text-[17px]">{data.label}</Text>
+              <Text className="text-white text-[30px] font-psemibold">{data.value}<Text className="text-[17px] font-pregular text-[#838383]">{data?.meas}</Text></Text>
+            </View>
+          ))}
+          </View>
+        </View>
+
+        {current?.track?.includes(5) && (
+          <View className="absolute bottom-[192px] w-full flex justify-between flex-row px-4">
+            <TouchableOpacity className="bg-[#111] w-[44.5vw] py-2 rounded-xl" onPress={() => {setForCount({...forCount, left: forCount.left + 1})}}>
+              <Text className="text-white text-[24px] font-psemibold text-center">+1</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity className="bg-[#111] w-[44.5vw] py-2 rounded-xl" onPress={() => {setForCount({...forCount, right: forCount.right + 1})}}>
+              <Text className="text-white text-[24px] font-psemibold text-center">+1</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {!isTracking ? (
+            <TouchableOpacity onPress={handleStart} className="bg-primary p-4 rounded-xl absolute bottom-[120px] w-[91vw] mx-4">
+            <Text className="text-white text-center text-[20px] font-psemibold">начать</Text>
+          </TouchableOpacity>
+        ) : (
+          <View>
+            {paused ? (
+              <View>
+                <TouchableOpacity onPress={handlePause} className="bg-green-500 p-4 rounded-lg">
+                  <Text className="text-white text-center text-lg font-semibold">продолжить</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleFinish} className="bg-red-500 p-4 mt-2 rounded-lg">
+                  <Text className="text-white text-center text-lg font-semibold">закончить</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View className="absolute w-full bottom-[120px]">
+                <TouchableOpacity onPress={handlePause} className="bg-yellow-500 p-4 rounded-xl mx-4">
+                  <Text className="text-white text-center text-lg font-psemibold">пауза</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleFinish} className="bg-red-500 p-4 mt-2 rounded-xl mx-4">
+                  <Text className="text-white text-center text-lg font-psemibold">закончить</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        )}
+
+        {isSaving && (
+          <View className="bg-[#000] absolute top-0 w-[100vw] h-[100vh] z-30 p-0 left-0 m-0">
+            <Text className="text-[22px] mt-[56px] mx-4 text-white font-pbold">конец тренировки</Text>
+            <Text className="text-[18px] font-pregular mx-4 text-[#838383] mb-2">не разбив яиц, омлет не приготовишь</Text>
+
+            <MapView
+              style={{ height: 200, marginTop: 10 }}
+              initialRegion={{
+                latitude: coordinates.length > 0 ? coordinates[0].latitude : 0,
+                longitude: coordinates.length > 0 ? coordinates[0].longitude : 0,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+              }}
+            >
+              <Polyline coordinates={coordinates} strokeColor="#000" strokeWidth={3} />
+            </MapView>
+
+            <View className="absolute bottom-[120px] w-full">
+            <TouchableOpacity onPress={handleConfirmCancel} className="bg-[#222] p-4 rounded-xl mt-4 mx-4">
+              <Text className="text-white text-center text-[17px] font-psemibold">отмена</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleConfirmFinish} className="bg-primary p-4 rounded-xl mt-2 mx-4">
+              <Text className="text-white text-center text-[17px] font-psemibold">сохранить</Text>
+            </TouchableOpacity>
+              </View>
+          </View>
+        )}
+      </View>
+    </View>
+    </>
   );
 };
 
 export default Bookmark;
-
-

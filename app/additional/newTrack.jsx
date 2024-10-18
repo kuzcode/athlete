@@ -5,7 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import { CustomButton, FormField, Selecter } from "../../components";
 import { Link, router } from "expo-router";
 import { createTracker } from "../../lib/appwrite";
-import { colors } from "../../constants/types";
+import { colors, trackTypes } from "../../constants/types";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const newTrack = () => {
@@ -21,18 +21,21 @@ return(
   <ScrollView className="bg-[#000] h-full w-full">
     {//<LinearGradient colors={colors[form.color]} className="w-[90vw] h-[200px] mb-4 mx-auto mt-10 rounded-2xl">
 }
-      <Text className="text-white font-pbold text-[20px] mx-4 mt-3">{form.name}</Text>
+    {form.name == '' ? (
+      <Text className="text-[#838383] font-pbold text-[20px] mx-4 mt-10">{trackTypes[form.type].title} {'название'}</Text>
+    ) : (
+      <Text className="text-white font-pbold text-[20px] mx-4 mt-10">{trackTypes[form.type].title} {form.name}</Text>
+    )}
     {//</LinearGradient>
 }
 
-    <FormField
+           <FormField
               title="название"
               value={form.name}
               handleChangeText={(e) => setForm({ ...form, name: e })}
               otherStyles="mt-4 mx-4 mb-4"
                 />
-
-<FormField
+              <FormField
                 title="цель"
                 value={form.goal.toString()} // Преобразуем целое число в строку для отображения
                 handleChangeText={(e) => setForm({ ...form, goal: parseInt(e) || 0 })} // Преобразуем вводимое значение обратно в целое число 

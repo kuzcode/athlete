@@ -60,16 +60,17 @@ const TabLayout = () => {
             ),
           }}
         />
-        <Tabs.Screen
-          name="new"
+
+    <Tabs.Screen
+          name="map"
           options={{
-            title: "New",
+            title: "map",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.neww}
+                icon={icons.plus}
                 color={color}
-                name="новое"
+                name="карта"
                 focused={focused}
               />
             ),
@@ -90,17 +91,16 @@ const TabLayout = () => {
             ),
           }}
         />
-
-        <Tabs.Screen
-          name="create"
+         <Tabs.Screen
+          name="new"
           options={{
-            title: "Create",
+            title: "New",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.plus}
+                icon={icons.neww}
                 color={color}
-                name="пост"
+                name="клуб"
                 focused={focused}
               />
             ),
