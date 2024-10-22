@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
-import "react-native-url-polyfill/auto";
 import { SplashScreen, Stack } from "expo-router";
 
 import GlobalProvider from "../context/GlobalProvider";
@@ -10,15 +9,9 @@ SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
-    "Poppins-Black": require("../assets/fonts/bold.otf"),
-    "Poppins-Bold": require("../assets/fonts/bold.otf"),
-    "Poppins-ExtraBold": require("../assets/fonts/bold.otf"),
-    "Poppins-ExtraLight": require("../assets/fonts/regular.otf"),
-    "Poppins-Light": require("../assets/fonts/regular.otf"),
-    "Poppins-Medium": require("../assets/fonts/medium.otf"),
-    "Poppins-Regular": require("../assets/fonts/regular.otf"),
-    "Poppins-SemiBold": require("../assets/fonts/bold.otf"),
-    "Poppins-Thin": require("../assets/fonts/regular.otf"),
+    "pregular": require("../assets/fonts/regular.ttf"),
+    "psemibold": require("../assets/fonts/semibold.ttf"),
+    "pbold": require("../assets/fonts/bold.ttf")
   });
 
   useEffect(() => {
