@@ -11,9 +11,11 @@
       "distribution": "internal"
     },
     "production": {
-      "releaseChannel": "production",
       "android": {
-        "buildType": "apk"
+        "image": "latest"
+      },
+      "ios": {
+        "image": "latest"
       }
     }
   },

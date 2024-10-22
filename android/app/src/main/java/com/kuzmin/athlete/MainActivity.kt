@@ -1,4 +1,4 @@
-package athlete.com
+package com.kuzmin.athlete
 
 import android.os.Build
 import android.os.Bundle

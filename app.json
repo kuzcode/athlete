@@ -2,53 +2,35 @@
   "expo": {
     "name": "атлет",
     "slug": "athlete",
-    "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#3c87ff"
-    },
-    "scheme": "Athlete",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "athlete.com"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#111"
-      },
-      "package": "athlete.com"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
+    "version": "1.0.0",
+    "sdkVersion": "50.0.0",
     "plugins": [
       "expo-router",
       "expo-font",
       "expo-location",
       "expo-av"
     ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#3c87ff"
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "android": {
+      "package": "com.kuzmin.athlete",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#111"
+      }
+    },
     "extra": {
-      "router": {
-        "origin": false
-      },
       "eas": {
         "projectId": "dc346ca7-4762-445a-8d07-9693d277c1b5"
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/648d23ed-d8b0-494b-8df0-4420d8d8fdff"
-    },
-    "owner": "kuzmin"
+    }
   }
 }
