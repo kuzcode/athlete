@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
-
+import { Stack } from "expo-router";
+import * as SplashScreen from 'expo-splash-screen';
 import GlobalProvider from "../context/GlobalProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -9,9 +9,9 @@ SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
-    "pregular": require("../assets/fonts/regular.ttf"),
-    "psemibold": require("../assets/fonts/semibold.ttf"),
-    "pbold": require("../assets/fonts/bold.ttf")
+    "pregular": require("../assets/fonts/pregular.ttf"),
+    "psemibold": require("../assets/fonts/psemibold.ttf"),
+    "pbold": require("../assets/fonts/pbold.ttf")
   });
 
   useEffect(() => {
