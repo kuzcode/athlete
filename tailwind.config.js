@@ -20,9 +20,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        pregular: ["pregular", "sans-serif"],
-        psemibold: ["psemibold", "sans-serif"],
-        pbold: ["pbold", "sans-serif"]
+        pregular: ["Installed-Regular", "sans-serif"],
+        psemibold: ["Installed-Semibold", "sans-serif"],
+        pbold: ["Installed-Bold", "sans-serif"]
       },
     },
   },

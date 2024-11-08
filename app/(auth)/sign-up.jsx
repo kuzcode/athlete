@@ -176,6 +176,7 @@ const SignUp = () => {
             value={form.name}
             handleChangeText={(e) => setForm({ ...form, name: e })}
             otherStyles="mt-10"
+            max={24}
           />
 
           <FormField
@@ -183,6 +184,7 @@ const SignUp = () => {
             value={form.username}
             handleChangeText={(e) => setForm({ ...form, username: e })}
             otherStyles="mt-10"
+            max={24}
           />
 
           <FormField
@@ -191,6 +193,7 @@ const SignUp = () => {
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
             keyboardType="email-address"
+            max={100}
           />
 
           <FormField
@@ -198,6 +201,7 @@ const SignUp = () => {
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
+            max={100}
           />
 
           <CustomButton

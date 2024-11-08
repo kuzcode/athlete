@@ -12,8 +12,6 @@ import { getAllPosts, getUserTrackers, getAllUsers, getUserTrainings } from "../
 import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
 import { types, colors } from "../../constants/types";
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from "expo-linear-gradient";
-
 const Home = () => {
   const { width } = Dimensions.get("window");
   const navigation = useNavigation();
@@ -24,7 +22,7 @@ const Home = () => {
   const { data: users } = useAppwrite(getAllUsers);
 
   return (
-    <ScrollView className="bg-white h-full bg-[#000] pt-0">
+    <ScrollView className="h-full bg-[#000] pt-0">
           <View className="flex space-y-1">
           <View className="h-[54vw] w-full p-0 flex items-center">
             <Video 
@@ -44,8 +42,8 @@ const Home = () => {
               </TouchableOpacity>
 
 
-            <LinearGradient className="h-[18vw] relative top-[17vw] w-full z-10" colors={['#fff0', '#000']}></LinearGradient>
-
+            {//<LinearGradient className="h-[18vw] relative top-[17vw] w-full z-10" colors={['#fff0', '#000']}></LinearGradient>
+}
             </View>
             <View>
             <Text className="text-[16px] leading-[17px] mx-[16px] font-pregular relative text-[#838383] mt-[40px] text-center mb-4">здравствуй, чемпион! время идти на тренировку, всё, что не убивает, делает нас сильнее</Text>
@@ -110,9 +108,10 @@ const Home = () => {
                 }
               ]
               return(
-                <TouchableOpacity className="" onPress={() => navigation.navigate('track', { track })}>
-                <LinearGradient colors={colors[track.color]} className="relative w-[90vw] mr-[3vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
-            
+                <TouchableOpacity onPress={() => navigation.navigate('track', { track })}  className="relative w-[90vw] mr-[3vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
+                {//<LinearGradient colors={colors[track.color]} className="relative w-[90vw] mr-[3vw] h-[165px] bg-[#161616] px-4 py-2 rounded-2xl overflow-hidden mb-4">
+            }
+
                   <Text className="text-white font-pbold text-[20px]">{contentList[track.type].a}</Text>
                   <Text className="text-[#ffffff83] font-pregular text-[20px]">{contentList[track.type].b}</Text>
 
@@ -126,9 +125,8 @@ const Home = () => {
                     </TouchableOpacity>
                   </View>
                   )}
-                
-                </LinearGradient>
-                
+                {//</LinearGradient>
+            }
                 </TouchableOpacity>
             )})}
 
@@ -166,7 +164,7 @@ const Home = () => {
                 <Text className="text-[#fff] text-[18px] font-pbold text-right mr-4 mt-2 z-20 mb-[6px]">{user.name}</Text>
                 <View className="ml-[38vw] max-w-[52vw] z-20 flex w-full flex-row flex-wrap justify-end pr-[12px]">
                 {newList.map(kind =>
-                  <View className="bg-[#252525] border-[1px] border-[#292929] shadow-lg flex relative rounded-3xl m-[2px] pt-[1px] pb-[3px] px-[9px] z-20"><Text className="text-white font-pregular text-[#bdbdbd]">{kind}</Text></View>
+                  <View className="bg-[#252525] border-[1px] border-[#292929] shadow-lg flex relative rounded-3xl m-[2px] pt-[1px] pb-[3px] px-[9px] z-20"><Text className="font-pregular text-[#bdbdbd]">{kind}</Text></View>
                 )}
                 </View>
               </TouchableOpacity>

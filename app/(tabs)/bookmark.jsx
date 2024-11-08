@@ -5,7 +5,6 @@ import { useGlobalContext } from '../../context/GlobalProvider';
 import * as Location from 'expo-location';
 import { toTrack, types } from '../../constants/types';
 import { saveCompleted } from '../../lib/appwrite';
-import { LinearGradient } from 'expo-linear-gradient';
 
 const Bookmark = () => {
   const { user } = useGlobalContext();
@@ -238,11 +237,8 @@ const Bookmark = () => {
       <View contentContainerStyle={{ paddingBottom: 20 }}>
         <View className="b-4 h-[100vh]">
         <View>
-          <LinearGradient
-          className="w-[60px] h-10 absolute right-0 z-10"
-          start={{x: 0, y: 0}} end={{x: 0.9, y: 0}}
-          colors={['#fff0', '#000']}
-          />
+          {//<LinearGradient className="w-[60px] h-10 absolute right-0 z-10"start={{x: 0, y: 0}} end={{x: 0.9, y: 0}}colors={['#fff0', '#000']}/>
+}
       <ScrollView className="mx-0 px-4 mb-4 flex flex-row" horizontal showsHorizontalScrollIndicator={false}>
         {filteredList.map(item => (
           <TouchableOpacity
@@ -304,7 +300,7 @@ const Bookmark = () => {
               </View>
             ) : (
               <View className="absolute w-full bottom-[120px]">
-                <TouchableOpacity onPress={handlePause} className="bg-yellow-500 p-4 rounded-xl mx-4">
+                <TouchableOpacity onPress={handlePause} className="bg-[#131313] p-4 rounded-xl mx-4">
                   <Text className="text-white text-center text-lg font-psemibold">пауза</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleFinish} className="bg-red-500 p-4 mt-2 rounded-xl mx-4">

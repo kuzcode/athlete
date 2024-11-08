@@ -1,6 +1,8 @@
 import { useEffect } from "react";
-import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { useFonts } from 'expo-font';
+import { Stack } from "expo-router";
+import * as SplashScreen from 'expo-splash-screen';
+
 import GlobalProvider from "../context/GlobalProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -8,9 +10,9 @@ SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
-    "pregular": require("../assets/fonts/pregular.ttf"),
-    "psemibold": require("../assets/fonts/psemibold.ttf"),
-    "pbold": require("../assets/fonts/pbold.ttf")
+    "Installed-Regular": require("../assets/fonts/pregular.otf"),
+    "Installed-Semibold": require("../assets/fonts/psemibold.otf"),
+    "Installed-Bold": require("../assets/fonts/pbold.otf"),
   });
 
   useEffect(() => {
@@ -20,10 +22,6 @@ const RootLayout = () => {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, error]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   if (!fontsLoaded && !error) {
     return null;
@@ -36,7 +34,6 @@ const RootLayout = () => {
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="additional" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="search/[query]" options={{ headerShown: false }} />
       </Stack>
     </GlobalProvider>
   );

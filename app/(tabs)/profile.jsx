@@ -81,7 +81,7 @@ const Profile = () => {
       </View>
 
       <View className="bg-[#3c87ff] mx-auto w-[91.545vw] h-[53vw] py-3 rounded-[16px] overflow-hidden">
-        <Text className="text-white font-pregular mx-4 text-[#ffffff83] mt-[-6px] text-[24px] mt-1 leading-[24px]">клубная{`\n`}карта участника</Text>
+        <Text className="text-white font-pregular mx-4 text-[#ffffff83] text-[24px] mt-1 leading-[24px]">клубная{`\n`}карта участника</Text>
         <Text className="text-white font-pbold text-[27vw] text-center absolute bottom-[-40px] left-[-20px] right-[-20px] text-nowrap">athlete</Text>
         <View className="mx-4 mt-2 absolute w-[83.545vw] bottom-4">
           {//<View style={styles.outerBlock}>
@@ -99,7 +99,7 @@ const Profile = () => {
     <Text className="text-[#838383] mr-1 text-[16px] font-pregular">Интересуюсь:</Text>
     {filteredList.map(kind => (
       <View key={kind.id} className="bg-[#252525] border-[1px] border-[#292929] shadow-lg flex relative rounded-3xl mr-[4px] pt-[1px] pb-[3px] px-[9px] z-20">
-        <Text className="text-white font-pregular text-[#bdbdbd] text-[16px]">{kind.title}</Text>
+        <Text className="font-pregular text-[#bdbdbd] text-[16px]">{kind.title}</Text>
       </View>
     ))}
   </View>

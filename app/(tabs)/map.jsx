@@ -202,21 +202,11 @@ export default function MapScreen() {
       )}
 
         {creatingRoute ? (
-          <View className="px-4 pb-3 bg-[#111]">
-        <Text className="font-pregular text-[16px] mt-1 text-[#838383]">описание</Text>
-          <TextInput
-          editable
-          multiline
-          numberOfLines={2}
-          maxLength={40}
-          className="bg-[#252525] rounded-xl text-[16px] text-white py-2 px-4 font-pregular"
-          
-          >
-            
-          </TextInput>
-
-
-          <Dropdown
+          <View>
+          <ScrollView className="absolute bottom-0 w-[100vw] h-[300px]">
+            <View className="bg-[#111] mt-[100px] px-4 pb-[60px] pt-4">
+      <Text className="font-pregular text-[17px] text-[#838383]">вид спорта</Text>
+      <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
@@ -228,7 +218,7 @@ export default function MapScreen() {
           labelField="label"
           valueField="value"
           placeholder={!isFocus ? 'выбери' : '...'}
-          searchPlaceholder="Search..."
+          searchPlaceholder="поиск"
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
@@ -238,25 +228,37 @@ export default function MapScreen() {
           }}
         />
 
-          <View className="flex flex-row justify-between mt-2">
-            <TouchableOpacity  
-          style={[newRouteCoords.length < 1 ? styles.disabledButton : {}]}
-          onPress={handleBackButton}
-          className="w-[20%] py-2 rounded-xl bg-[#fff]"
-          disabled={newRouteCoords.length < 1}
-        >
-          <Text className="text-center text-[16px] font-pregular">↩️</Text>
-        </TouchableOpacity>
-          <TouchableOpacity
-            style={[newRouteCoords.length < 2 ? styles.disabledButton : {}]}
-            onPress={handleFinishRoute}
-            className="w-[78%] py-2 rounded-xl bg-[#fff]"
-            disabled={newRouteCoords.length < 2}
+      <Text className="font-pregular text-[17px] mb-2 mt-1 text-[#838383]">описание</Text>
+        <TextInput
+          editable
+          multiline
+          numberOfLines={10}
+          maxLength={500}
+          className="bg-[#252525] rounded-xl text-[16px] text-white py-2 px-4 font-pregular"
           >
-            <Text style={newRouteCoords.length < 2 ? {color: "#777"} : {color: '#000'}} className="text-white text-center text-[16px] font-pregular">готово</Text>
-          </TouchableOpacity>
-            </View>
-          </View>
+        </TextInput>
+      </View>
+    </ScrollView>
+
+<View className="flex flex-row justify-between mt-2 fixed bottom-[12px] mx-8 z-10">
+<TouchableOpacity  
+style={[newRouteCoords.length < 1 ? styles.disabledButton : {}]}
+onPress={handleBackButton}
+className="w-[20%] py-2 rounded-xl bg-[#fff]"
+disabled={newRouteCoords.length < 1}
+>
+<Text className="text-center text-[16px] font-pregular">↩️</Text>
+</TouchableOpacity>
+<TouchableOpacity
+style={[newRouteCoords.length < 2 ? styles.disabledButton : {}]}
+onPress={handleFinishRoute}
+className="w-[78%] py-2 rounded-xl bg-[#fff]"
+disabled={newRouteCoords.length < 2}
+>
+<Text style={newRouteCoords.length < 2 ? {color: "#777"} : {color: '#000'}} className="text-white text-center text-[16px] font-pregular">готово</Text>
+</TouchableOpacity>
+</View>
+</View>
         ) : showingDetails ? (
             <View className="h-[130px] w-[100vw] bg-[#111] px-4 py-2">
               <Text className="text-white text-[18px] font-psemibold">{details?.user?.name}</Text>
@@ -342,10 +344,13 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: '#fff',
+    fontFamily: 'Installed-Regular'
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: '#fff'
+    color: '#fff',
+    fontFamily: 'Installed-Regular'
   },
   iconStyle: {
     width: 20,

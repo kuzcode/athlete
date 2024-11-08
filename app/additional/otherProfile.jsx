@@ -112,7 +112,7 @@ const otherProfile = () => {
               <Text className="text-[#838383] mr-1 text-[16px] font-pregular">Интересуюсь:</Text>
                 {filteredList.map(kind =>
                   <View className="bg-[#252525] border-[1px] border-[#292929] shadow-lg flex relative rounded-3xl mr-[4px] pt-[1px] pb-[3px] px-[9px] z-20">
-                    <Text className="text-white font-pregular text-[#bdbdbd] text-[16px]">{kind.title}</Text></View>
+                    <Text className="font-pregular text-[#bdbdbd] text-[16px]">{kind.title}</Text></View>
                 )}
             </View>
             {user.bio !== '' || user.bio !== null && (
@@ -130,7 +130,7 @@ const otherProfile = () => {
                 let sport = types.find(sport => sport.key == marker.type);
                 return(
               <View className="flex justify-end">
-                <Text className="text-white font-pregular text-[#838383] text-[18px] mt-2 mb-1">{sport?.title}: {marker.time} мин</Text>
+                <Text className="font-pregular text-[#838383] text-[18px] mt-2 mb-1">{sport?.title}: {marker.time} мин</Text>
                   <View style={styles.outer}>
                   <View style={[styles.inner, { width: `${w}%`, backgroundColor: sport?.color }]} />
                   </View>

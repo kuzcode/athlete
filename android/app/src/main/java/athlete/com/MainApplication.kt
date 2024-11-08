@@ -1,4 +1,4 @@
-package com.kuzmin.athlete
+package athlete.com
 
 import android.app.Application
 import android.content.res.Configuration
