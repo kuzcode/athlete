@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Modal, FlatList, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Modal, FlatList, StyleSheet } from "react-native";
 
 const Selecter = ({
   title,

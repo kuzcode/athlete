@@ -1,14 +1,13 @@
 import { useState } from "react";
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View, Dimensions, Image  } from "react-native";
-import { useRoute } from '@react-navigation/native';
-import { CustomButton, FormField, Selecter } from "../../components";
-import { Link, router } from "expo-router";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FormField } from "../../components";
+import { router } from "expo-router";
 import { createTracker } from "../../lib/appwrite";
 import { colors, trackTypes } from "../../constants/types";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
-const newTrack = () => {
+const NewTrack = () => {
   const { user } = useGlobalContext();
   const [form, setForm] = useState({
     name: '',
@@ -21,14 +20,13 @@ return(
   <ScrollView className="bg-[#000] h-full w-full">
     {//<LinearGradient colors={colors[form.color]} className="w-[90vw] h-[200px] mb-4 mx-auto mt-10 rounded-2xl">
 }
-    {form.name == '' ? (
+    {form.name === '' ? (
       <Text className="text-[#838383] font-pbold text-[20px] mx-4 mt-10">{trackTypes[form.type].title} {'название'}</Text>
     ) : (
       <Text className="text-white font-pbold text-[20px] mx-4 mt-10">{trackTypes[form.type].title} {form.name}</Text>
     )}
     {//</LinearGradient>
 }
-
            <FormField
               title="название"
               value={form.name}
@@ -63,4 +61,4 @@ return(
 )
 }
 
-export default newTrack;
+export default NewTrack;

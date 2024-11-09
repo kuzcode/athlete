@@ -1,30 +1,13 @@
 import { router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 
 import { icons } from "../../constants";
-import useAppwrite from "../../lib/useAppwrite";
-
-import { getUserPosts, signOut, getUserMap } from "../../lib/appwrite";
-import { useGlobalContext } from "../../context/GlobalProvider";
-import { EmptyState, InfoBox, VideoCard } from "../../components";
-import { useState, useEffect } from "react";
 import { types } from "../../constants/types";
 import { useRoute } from '@react-navigation/native';
 
-const otherProfile = () => {
+const OtherProfile = () => {
     const route = useRoute();
   const { user } = route.params;
-  const { data: map } = useAppwrite(() => getUserMap(user?.$id));
-  const [markers, setMarkers] = useState([]);
-
-  useEffect(() => {
-    if (map[0]) { // Проверяем, пришли ли данные пользователя
-      setMarkers(map[0].markers); // Если sports не определен, используем пустой массив
-      console.log(markers);
-}
-  }, [map]); // Срабатывает при изменении данных пользователя
-
 
   const percentage = 61; // Значение от 1 до 100
   const blockWidth = `${percentage}%`;
@@ -65,7 +48,6 @@ const otherProfile = () => {
     <ScrollView className="bg-[#000] h-full">
           <View className="w-full flex justify-center items-center mt-6 mb-12 px-4">
             <TouchableOpacity
-              onPress={settings}
               className="flex w-full items-end mb-10"
             >
               <Image
@@ -123,23 +105,9 @@ const otherProfile = () => {
           onPress={() => {router.push("/map")}}
           >
           <Text className="text-white font-pbold text-[19px]">Счётчик</Text>
-            <View>
-              {markers.map(marker => {
-                const x = Math.max(...markers.map(marker => marker.time));
-                const w = marker.time / x * 100;
-                let sport = types.find(sport => sport.key == marker.type);
-                return(
-              <View className="flex justify-end">
-                <Text className="font-pregular text-[#838383] text-[18px] mt-2 mb-1">{sport?.title}: {marker.time} мин</Text>
-                  <View style={styles.outer}>
-                  <View style={[styles.inner, { width: `${w}%`, backgroundColor: sport?.color }]} />
-                  </View>
-                </View>
-                )})}
-            </View>
           </TouchableOpacity>
     </ScrollView>
   );
 };
 
-export default otherProfile;
+export default OtherProfile;

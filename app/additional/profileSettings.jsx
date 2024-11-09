@@ -1,22 +1,18 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
-import { useState, useEffect } from "react";
-import useAppwrite from "../../lib/useAppwrite";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useState } from "react";
 import { updateUser } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { types } from "../../constants/types";
-import { icons } from "../../constants";
-import { CustomButton, FormField, Selecter } from "../../components";
+import { FormField } from "../../components";
 import * as DocumentPicker from "expo-document-picker";
 
 
-const profileSettings = () => {
-  const { user, setUser, setIsLogged } = useGlobalContext();
+const ProfileSettings = () => {
+  const { user } = useGlobalContext();
   const [form, setForm] = useState({
-        avatar: user.imageUrl,
-        name: user.name,
-        bio: user.bio,
-        username: user.username,
+        avatar: user?.imageUrl,
+        name: user?.name,
+        bio: user?.bio,
+        username: user?.username,
         id: user?.$id,
     })
 
@@ -94,4 +90,4 @@ const profileSettings = () => {
     )
 }
 
-export default profileSettings;
+export default ProfileSettings;

@@ -1,15 +1,15 @@
-import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useState, useEffect } from "react";
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserCompleted, signOut } from "../../lib/appwrite";
+import { getUserCompleted } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { types } from "../../constants/types";
 import { icons } from "../../constants";
 
 const Profile = () => {
   const router = useRouter();
-  const { user, setUser, setIsLogged } = useGlobalContext();
+  const { user } = useGlobalContext();
   const { data: completed } = useAppwrite(() => getUserCompleted(user?.$id));
   const [trainings, setTrainings] = useState([]);
   
@@ -27,37 +27,10 @@ const Profile = () => {
     return `${hours}:${minutes}:${seconds}`;
   };
 
-  const logout = async () => {
-    await signOut();
-    setUser(null);
-    setIsLogged(false);
-    router.replace("/sign-in");
-  };
 
   const settings = () => {
     router.push("/additional/settings");
   };
-
-  const percentage = 61; // Значение от 1 до 100
-  const blockWidth = percentage + '%';
-
-  const styles = StyleSheet.create({
-    text: {
-      fontSize: 24,
-      marginBottom: 10,
-    },
-    outerBlock: {
-      width: '100%',
-      height: 30,
-      backgroundColor: '#1F75FF',
-      borderRadius: 6,
-      overflow: 'hidden',
-    },
-    innerBlock: {
-      height: '100%',
-      backgroundColor: '#99C0FF',
-    }
-  });
 
   const filteredList = types.filter(item => user?.sports?.includes(item.key));
 

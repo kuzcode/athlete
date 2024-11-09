@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { getTrainingsForYou } from '../../lib/appwrite'; 
+import React from 'react';
+import { Text, ScrollView } from 'react-native';
 
 const Club = () => {
   return(

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View, Dimensions, Image  } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useRoute } from '@react-navigation/native';
-import { CustomButton, FormField, Selecter } from "../../components";
-import { Link, router } from "expo-router";
+import { FormField } from "../../components";
+import { router } from "expo-router";
 import { updateTracker } from "../../lib/appwrite";
-import { colors } from "../../constants/types";
 
 const DetailScreen = () => {
     const route = useRoute();
@@ -19,9 +18,6 @@ const DetailScreen = () => {
 
   const contentList = [
     {
-
-    },
-    {
       a: `Меньше ${form.name}`,
       b: `${track.done}/${form.goal} дней`
     }
@@ -34,8 +30,8 @@ const DetailScreen = () => {
                   <Text className="text-white font-pbold text-[20px]">{contentList[track.type].a}</Text>
                   <Text className="text-[#ffffff83] font-pregular text-[20px]">{contentList[track.type].b}</Text>
 
-                  {track.type == 1 && (
-                    <View className="absolute flex flex-row bottom-3 px-4 w-[90vw] justify-between hidden">
+                  {track.type === 1 && (
+                    <View className="absolute flex flex-row bottom-3 px-4 w-[90vw] justify-between">
                     <TouchableOpacity className="w-[38.5%] py-[5px] bg-[#ffffff20] border-[1px] border-[#ffffff25] rounded-lg">
                       <Text className="font-pregular text-white text-center text-[15px]">сорвался</Text>
                     </TouchableOpacity>

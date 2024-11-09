@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView, Dimensions, Alert, TouchableOpacity } from "react-native";
-import * as DocumentPicker from "expo-document-picker";
+import { View, Text, ScrollView, Dimensions, Alert, TouchableOpacity, Image } from "react-native";
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { images } from "../../constants";
 import { createUser } from "../../lib/appwrite";
 import { CustomButton, FormField, Selecter } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
@@ -106,7 +104,7 @@ const SignUp = () => {
           }}
         >
 
-      {visible == 1 && (
+      {visible === 1 && (
         <View className='top-0 left-0 bg-[#111] absolute z-10 w-[100vw] h-full px-4'>
           <Text className='text-white font-pbold text-[22px] mt-10'>выберите, какими видами спорта вы увлечены</Text>
 
@@ -125,22 +123,24 @@ const SignUp = () => {
 
 
           <TouchableOpacity className="absolute w-full bottom-[20px] bg-primary mx-4 py-4 rounded-2xl" onPress={next}>
-                <Text className="font-pregular text-white text-[18px] text-center">{form.sports.length == 0 ? ('пропустить') : ('дальше')}</Text>
+                <Text className="font-pregular text-white text-[18px] text-center">{form.sports.length === 0 ? ('пропустить') : ('дальше')}</Text>
             </TouchableOpacity>
         </View>
       )}
 
-      {visible == 2 && (
+      {visible === 2 && (
         <View className='top-0 left-0 bg-[#111] absolute z-10 w-[100vw] h-full px-4'>
           <Text className='text-white font-pbold text-[22px] mt-10'>дополнительная информация</Text>
-          {form.avatar == null ? (
+          {form.avatar === null ? (
             <TouchableOpacity onPress={selectImage} className="bg-[#252525] h-[160px] w-[160px] mx-auto mt-7 rounded-full">
 
             </TouchableOpacity>
+
           ) : (
             <Image 
             source={{ uri: form.avatar.uri }}
             className="w-[160px] h-[160px]"
+            resizeMode="contain"
             />
           )}
           
@@ -162,7 +162,7 @@ const SignUp = () => {
 
 
           <TouchableOpacity className="absolute w-full bottom-[20px] bg-primary mx-4 py-4 rounded-2xl" onPress={submit}>
-                <Text className="font-pregular text-white text-[18px] text-center">{form.sports.length == 0 ? ('пропустить') : ('дальше')}</Text>
+                <Text className="font-pregular text-white text-[18px] text-center">{form.sports.length === 0 ? ('пропустить') : ('дальше')}</Text>
             </TouchableOpacity>
         </View>
       )}

@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Loader } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
-const AuthLayout = () => {
+const AdditionalLayout = () => {
   const { loading, isLogged } = useGlobalContext();
 
   if (!loading && !isLogged) return <Redirect href="/sign-in" />;
@@ -30,13 +30,19 @@ const AuthLayout = () => {
           }}
         />
       <Stack.Screen
-          name="profilesettings"
+          name="profileSettings"
           options={{
             headerShown: false,
           }}
         />
         <Stack.Screen
           name="trackers"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="track"
           options={{
             headerShown: false,
           }}
@@ -49,4 +55,4 @@ const AuthLayout = () => {
   );
 };
 
-export default AuthLayout;
+export default AdditionalLayout;

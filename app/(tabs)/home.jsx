@@ -1,6 +1,4 @@
-import { useState,  useRef  } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View, Dimensions, Image  } from "react-native";
 import { ResizeMode, Video } from "expo-av";
 import background from "../../assets/video.mp4"
@@ -8,14 +6,13 @@ import background from "../../assets/video.mp4"
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { icons } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
-import { getAllPosts, getUserTrackers, getAllUsers, getUserTrainings } from "../../lib/appwrite";
-import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
-import { types, colors } from "../../constants/types";
+import { getUserTrackers, getAllUsers, getUserTrainings } from "../../lib/appwrite";
+import { types } from "../../constants/types";
 import { useNavigation } from '@react-navigation/native';
 const Home = () => {
   const { width } = Dimensions.get("window");
   const navigation = useNavigation();
-  const { user, setUser, setIsLogged } = useGlobalContext();
+  const { user } = useGlobalContext();
   const { data: trainings } = useAppwrite(() => getUserTrainings(user?.$id));
 
   const { data: trackers } = useAppwrite(() => getUserTrackers(user?.$id));
@@ -115,7 +112,7 @@ const Home = () => {
                   <Text className="text-white font-pbold text-[20px]">{contentList[track.type].a}</Text>
                   <Text className="text-[#ffffff83] font-pregular text-[20px]">{contentList[track.type].b}</Text>
 
-                  {track.type == 1 && (
+                  {track.type === 1 && (
                     <View className="absolute flex flex-row bottom-3 px-4 w-[90vw] justify-between">
                     <TouchableOpacity className="w-[38.5%] py-[5px] bg-[#ffffff20] border-[1px] border-[#ffffff25] rounded-lg">
                       <Text className="font-pregular text-white text-center text-[15px]">сорвался</Text>
@@ -148,7 +145,7 @@ const Home = () => {
               
             {users.map(user => {
               var newList = user?.sports.map(str => {
-                const matchedObject = types.find(type => type.key == str);
+                const matchedObject = types.find(type => type.key === str);
                 // Если объект найден, возвращаем его текст, иначе возвращаем null или другое значение
                 return matchedObject ? matchedObject.title : null; 
               }).filter(title => title !== null); // Удаляем значения null из нового списка

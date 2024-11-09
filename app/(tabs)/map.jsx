@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Alert, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import { View, Button, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import MapView, { Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { getAllRoutes, createRoute, getUserById, deleteRoute } from '../../lib/appwrite';
 import haversine from "haversine";
@@ -34,7 +34,7 @@ export default function MapScreen() {
   const [newRouteCoords, setNewRouteCoords] = useState([]);
   const [totalDistance, setTotalDistance] = useState(0);
   const { user } = useGlobalContext();
-  const [description, setDescription] = useState('')
+  const [description] = useState('')
 
   const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
@@ -265,7 +265,7 @@ disabled={newRouteCoords.length < 2}
               <Text className="text-white text-[18px] font-psemibold">{details?.distance}км</Text>
               <Text className="text-[#838383] text-[16px] font-pregular">{details?.description}</Text>
 
-              {user.$id == details.userId ? (
+              {user.$id === details.userId ? (
           <View className="flex flex-row absolute bottom-10 left-3">
               <TouchableOpacity onPress={() => {setShowAlert(true)}} className="bg-[#252525] px-4 py-1 rounded-xl absolute">
                 <Text className="text-[#fff] font-pregular text-[16px]">удалить</Text>
